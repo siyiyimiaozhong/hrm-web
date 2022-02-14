@@ -11,13 +11,13 @@
           <el-button icon="el-icon-search" type="text" class="btnSearch" @click="handleBtnSearch"></el-button>
         </el-tooltip>
         <transition name="el-fade-in-linear">
-          <el-autocomplete 
+          <el-autocomplete
             ref="searchInput"
             v-model="searchVal"
-            :fetch-suggestions="querySearchAsync" 
-            @select="handleSelect" 
+            :fetch-suggestions="querySearchAsync"
+            @select="handleSelect"
             @blur="showSearchInput = false"
-            placeholder="站内搜索" 
+            placeholder="站内搜索"
             :trigger-on-focus="true"
             v-show="showSearchInput" ></el-autocomplete>
         </transition>
@@ -50,11 +50,6 @@
               {{$t('navbar.dashboard')}}
             </el-dropdown-item>
           </router-link>
-          <a target='_blank' href="https://github.com/itheima2017/vue-element-admin-itheima">
-            <el-dropdown-item>
-              {{$t('navbar.github')}}
-            </el-dropdown-item>
-          </a>
           <el-dropdown-item divided>
             <span @click="logout" style="display:block;">{{$t('navbar.logOut')}}</span>
           </el-dropdown-item>
