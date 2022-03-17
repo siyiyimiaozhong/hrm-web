@@ -59,7 +59,8 @@
                 查看
               </router-link>
               <el-button @click="handleRole(scope.row)" type="text" size="small">分配角色</el-button>
-              <el-button @click="handleDelete(scope.row)" type="text" size="small">删除</el-button>
+              <el-button v-if="show('point-user-delete')" @click="handleDelete(scope.row)" type="text" size="small">删除
+              </el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -85,6 +86,7 @@
   import PageTool from './../../components/page/page-tool'
   import employeesAdd from './../components/add'
   import addRole from './../components/addRole'
+  import {hasPermissionPoint} from '@/utils/permission'
 
   export default {
     name: 'employeesList',
@@ -108,6 +110,10 @@
       }
     },
     methods: {
+      show(name) {
+        // alert(name)
+        return hasPermissionPoint(name)
+      },
       // 业务方法
       doQuery(params) {
         list(this.requestParameters)
