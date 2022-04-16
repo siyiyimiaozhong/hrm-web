@@ -41,7 +41,7 @@ export default {
     error: 'error log'
   },
   login: {
-    title: 'itheima login',
+    title: 'hrm login',
     logIn: 'Log in',
     name: 'name',
     entryTime: 'entry time',

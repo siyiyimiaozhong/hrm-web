@@ -12,7 +12,7 @@
       >
       <el-button size="small" type="primary" :disabled="processing">{{uploadTip}}</el-button>
       <div slot="tip" class="el-upload__tip">
-        (推荐<span class="colRed pointer"><a :href="baseData.fileUrl">下载模板文件</a></span>，填写后上传)<br>
+        (推荐<span class="colRed pointer"><a @click="downloadTemplateExcel">下载模板文件</a></span>，填写后上传)<br>
         <span @click="handleUpload" class="colRed pointer">点击查看文件上传要求</span>
       </div>
     </el-upload>
@@ -54,6 +54,7 @@
 <script>
 import { importFile } from '@/filters/index'
 import { getToken } from '@/utils/auth'
+import { downTemplate } from '@/api/base/users'
 export default {
   name: 'import',
   props: ['baseData'],
@@ -100,7 +101,7 @@ export default {
       this.uploadTip = '点击上传'
       this.processing = false
       this.dialogImportVisible = false
-      if (obj.code === 0) {
+      if (obj.code === 10000) {
         this.$message.success('导入成功' + '!')
       } else {
         this.$message.error('导入失败' + '!')
@@ -109,6 +110,23 @@ export default {
     // 查看上传文件要求
     handleUpload: function() {
       this.centerDialogVisible = true
+    },
+    // 下载用户信息导入模板
+    downloadTemplateExcel: function () {
+      downTemplate(null).then(function (response) {
+          var blob = new Blob([response.data])
+          var downloadElement = document.createElement('a')
+          var href = window.URL.createObjectURL(blob)
+          downloadElement.href = href
+          downloadElement.download = '导入用户信息模板.xlsx'
+          document.body.appendChild(downloadElement)
+          downloadElement.click()
+          document.body.removeChild(downloadElement)
+          window.URL.revokeObjectURL(href)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
     }
   }
 }

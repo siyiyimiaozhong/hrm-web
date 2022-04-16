@@ -22,10 +22,6 @@
             v-show="showSearchInput" ></el-autocomplete>
         </transition>
       </div>
-      <!-- 使用文档 -->
-      <a href="http://itheimaadmin.itcast.cn/book/help" class="item" target="_blank">
-        <el-tooltip class="item" effect="dark" content="使用文档" placement="bottom"><i class="el-icon-question"></i></el-tooltip>
-      </a>
       <!-- 错误 -->
       <error-log class="error item"></error-log>
       <!-- 全屏 -->

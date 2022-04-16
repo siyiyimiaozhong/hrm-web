@@ -165,10 +165,9 @@
             }
           })
         })
-      },
+      }
     },
     created: function () {
-
       this.getData()
     }
   }

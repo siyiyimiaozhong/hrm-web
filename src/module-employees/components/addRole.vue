@@ -1,8 +1,9 @@
 <template>
   <div class="add-form">
-    <el-dialog title="分配角色" :visible.sync="roleFormVisible" style="height:300px">
-      <el-form  :model="formBase"  label-position="left" label-width="120px" style='margin-left:120px; width:500px;'>
-        <el-checkbox-group v-model="checkedRoles">
+    <el-dialog title="分配角色" :visible.sync="roleFormVisible" style="height:500px">
+      <el-form :model="formBase" label-position="left" label-width="120px" style='margin-left:120px; width:500px;'>
+        <el-checkbox-group
+          v-model="checkedRoles">
           <el-checkbox v-for="(item,index) in roles" :label="item.id" :key="index">{{item.name}}</el-checkbox>
         </el-checkbox-group>
       </el-form>
@@ -29,7 +30,7 @@
       }
     },
     methods: {
-      toAssignPerm(id) {
+      toAssignPrem(id) {
         detail({id: id}).then(res1 => {
           this.checkedRoles = res1.data.data.roleIds
           findAll().then(res => {

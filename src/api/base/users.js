@@ -1,4 +1,4 @@
-import {createAPI} from '@/utils/request'
+import {createAPI, createDown} from '@/utils/request'
 
 export const list = data => createAPI('/sys/user/page', 'post', data)
 export const simple = data => createAPI('/sys/user/simple', 'get', data)
@@ -7,3 +7,4 @@ export const update = data => createAPI(`/sys/user/${data.id}`, 'put', data)
 export const remove = data => createAPI(`/sys/user/${data.id}`, 'delete', data)
 export const detail = data => createAPI(`/sys/user/${data.id}`, 'get', data)
 export const assignRoles = data => createAPI(`/sys/user/assignRoles`, 'put', data)
+export const downTemplate = data => createDown(`/sys/user/template`, 'get', data)

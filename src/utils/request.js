@@ -9,7 +9,7 @@ const instance = axios.create({
   timeout: 5000 // request timeout
 })
 
-const ok = "10000";
+const ok = '10000';
 
 // request interceptor
 instance.interceptors.request.use(
@@ -22,7 +22,7 @@ instance.interceptors.request.use(
   },
   error => {
     // Do something with request error
-    Message.error("对不起，出错了")
+    Message.error('对不起，出错了')
     console.log(error) // for debug
     Promise.reject(error)
   }
@@ -188,10 +188,6 @@ export const createDown = (url, method, data) => {
     config.params = data
   } else {
     config.data = data
-  }
-  config.headers = {
-    'Cache-Control': 'no-cache',
-    'Content-Type': 'application/x-www-form-urlencoded'
   }
   config.responseType = 'blob'
   return instance({
