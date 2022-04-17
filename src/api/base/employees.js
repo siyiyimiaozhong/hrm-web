@@ -26,7 +26,7 @@ export const positiveDetail = data => createAPI(`/employees/positive/${data.id}`
 export const positive = data => createAPI(`/employees/positive/${data.id}`, 'POST', data) // 转正
 export const edit = data => createAPI(`/employees/${data.id}`, 'POST', data) // 编辑
 
-export const importDown = data => createDown(`/employees/export/2018-03`, 'get', data) // 导出
+export const importDown = data => createDown(`/employees/export/${data}`, 'get', data) // 导出
 
 // export const importReport = data => createAPI(`/employees/import`, 'post', data) // 导入
 
