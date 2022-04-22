@@ -1,7 +1,7 @@
 /*
- * @Author: taoshiwei <taoshiwei@itcast.cn> 
- * @Description: 列表页 
- * @Date: 2018-04-13 16:13:27 
+ * @Author:
+ * @Description: 列表页
+ * @Date: 2018-04-13 16:13:27
  * @Last Modified by: hans.taozhiwei
  * @Last Modified time: 2018-04-13 16:15:04
  */

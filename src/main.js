@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import 'normalize.css/normalize.css'// A modern alternative to CSS resets
+import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/styles/index.scss' // global css
@@ -8,7 +8,7 @@ import router from './router'
 import store from './store'
 import i18n from './lang' // Internationalization
 import './icons' // icon
-import './errorLog'// error log
+import './errorLog' // error log
 import * as filters from './filters' // global filters
 // font-awesome
 import 'font-awesome/css/font-awesome.css'
@@ -24,8 +24,9 @@ import employees from '@/module-employees/' //  员工
 import settings from '@/module-settings/' //  角色
 import permissions from '@/module-permissions/' //  权限
 import socialSecuritys from '@/module-social-securitys/' //  社保
-
+import attendances from '@/module-attendances/' //  考勤
 import tools from './utils/common.js'
+
 Vue.prototype.$tools = tools
 
 Vue.use(tools)
@@ -37,6 +38,7 @@ Vue.use(employees, store)
 Vue.use(settings, store)
 Vue.use(permissions, store)
 Vue.use(socialSecuritys, store)
+Vue.use(attendances, store)
 
 /*
 * 注册 - 组件
@@ -61,5 +63,5 @@ new Vue({
   store,
   i18n,
   template: '<App/>',
-  components: { App }
+  components: {App}
 })
