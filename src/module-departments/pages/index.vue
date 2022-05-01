@@ -122,7 +122,9 @@
       return {
         deptAdd: 'deptAdd',
         activeName: 'first',
-        departData: {},
+        departData: {
+          companyName: '123'
+        },
         depts: []
       }
     },

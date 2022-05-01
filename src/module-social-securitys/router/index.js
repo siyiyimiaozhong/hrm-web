@@ -1,11 +1,3 @@
-/*
- * @Author:
- * @Description: 社保
- * @Date: 2018-04-13 16:13:27
- * @Last Modified by: hans.taozhiwei
- * @Last Modified time: 2018-11-15 10:41:57
- */
-
 import Layout from '@/module-dashboard/pages/layout'
 const _import = require('@/router/import_' + process.env.NODE_ENV)
 

@@ -25,6 +25,7 @@ import settings from '@/module-settings/' //  角色
 import permissions from '@/module-permissions/' //  权限
 import socialSecuritys from '@/module-social-securitys/' //  社保
 import attendances from '@/module-attendances/' //  考勤
+import salarys from '@/module-salarys/' //  考勤
 import tools from './utils/common.js'
 
 Vue.prototype.$tools = tools
@@ -39,6 +40,7 @@ Vue.use(settings, store)
 Vue.use(permissions, store)
 Vue.use(socialSecuritys, store)
 Vue.use(attendances, store)
+Vue.use(salarys, store)
 
 /*
 * 注册 - 组件
@@ -55,6 +57,18 @@ Object.keys(filters).forEach(key => {
 })
 
 Vue.config.productionTip = false
+
+Vue.filter('dateformat', function (dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
+  return moment(dataStr).format(pattern)
+})
+
+Vue.prototype.dateFormat = function (row, column, cellValue) {
+  var date = row[column.property]
+  if (date === undefined) {
+    return '----'
+  }
+  return moment(date).format('YYYY-MM-DD')
+}
 
 /* eslint-disable */
 new Vue({

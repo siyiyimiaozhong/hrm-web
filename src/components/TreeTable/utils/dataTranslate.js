@@ -1,10 +1,3 @@
-/*
-* @Author: sunlandong
-* @Date:   2017-03-11 12:06:49
-* @Last Modified by:   sunlandong
-* @Last Modified time: 2017-03-11 16:30:03
-*/
-
 import Vue from 'vue'
 function DataTransfer (data) {
   if (!(this instanceof DataTransfer)) {

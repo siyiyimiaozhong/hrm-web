@@ -88,6 +88,7 @@
               <el-radio-group v-model="modifyData.adtStatu">
                 <el-radio
                   v-for="item in stateData.vacationtype"
+                  style="margin-left: 30px;"
                   :label="item.id"
                   :key="item.id"
                   :value="item.name"
@@ -154,10 +155,10 @@
         },
         formData: {
           page: 1,
-          pagesize: 10
-          // keyword: this.keyword,
-          // deptID: this.deptID, // 性别
-          // stateID: this.stateID
+          pagesize: 10,
+          keyword: this.keyword,
+          deptID: this.deptID, // 性别
+          stateID: this.stateID
         },
         modifyData: {
           userId: '',

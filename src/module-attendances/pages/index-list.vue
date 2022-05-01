@@ -164,8 +164,8 @@ export default {
         adtStatu: "",
         departmentId:""
       },
-      departmentData: [],
-    };
+      departmentData: []
+    }
   },
   methods: {
     // 业务方法

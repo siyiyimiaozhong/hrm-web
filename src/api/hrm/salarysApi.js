@@ -23,4 +23,3 @@ export const getArchivingExport = data => createAPI(`/salarys/reports/${data.yea
 export const getArchivingFirst = data => createAPI(`/salarys/reports/${data.yearMonth}/first`, 'get', data)
 export const getArchivingArchive = data => createAPI(`/salarys/reports/${data.yearMonth}/archive`, 'post', data)
 export const getArchivingList = data => createAPI(`/salarys/reports/${data.year}/list`, 'get', data)
-

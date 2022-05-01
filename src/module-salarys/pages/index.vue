@@ -1,10 +1,9 @@
 <template>
   <div class="salarys-container">
     <div class="salarys">
-      <div class>
-        开始做
+      <div class="">开始做
         <el-input v-model="dataMonth" style="width: 100px;" size="mini" :placeholder="date"></el-input>
-        社保
+        工资
         <el-button type="primary" size="mini" @click="onSubmit">确定</el-button>
       </div>
     </div>
@@ -12,10 +11,10 @@
 </template>
 
 <script>
-  import {getSettings, saveSettings} from '@/api/hrm/socialSecuritys';
+  import {getCompanySettings, saveCompanySettings} from '@/api/hrm/salarysApi'
 
   export default {
-    name: 'social-securitys-index',
+    name: 'salarys-table-index',
     data() {
       return {
         dataMonth: '',
@@ -28,10 +27,10 @@
         this.saveData()
       },
       async getData() {
-        const {data: getDataRes} = await getSettings()
+        const {data: getDataRes} = await getCompanySettings()
         if (getDataRes.data != null) {
           let dataMonth = getDataRes.data.dataMonth
-          this.$router.push({path: './list', query: {'yearMonth': dataMonth}});
+          this.$router.push({path: './list', query: {'yearMonth': dataMonth}})
         } else {
           var date = new Date()
           var year = date.getFullYear()
@@ -43,9 +42,10 @@
         }
       },
       async saveData() {
-        if (this.dataMonth !== '') {
+        // eslint-disable-next-line eqeqeq
+        if (this.dataMonth != '') {
           let dataMonth = this.dataMonth
-          const {data: saveDataRes} = await saveSettings({dataMonth})
+          const {data: saveDataRes} = await saveCompanySettings({dataMonth})
           this.$router.push({path: './list', query: {'yearMonth': this.dataMonth}})
         } else {
           this.$message.error('请输入月份')
@@ -55,7 +55,7 @@
     created() {
       this.getData()
     }
-  };
+  }
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
