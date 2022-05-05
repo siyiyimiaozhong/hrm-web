@@ -9,9 +9,9 @@
           <el-table-column prop="mobile" label="手机" width="130" sortable></el-table-column>
           <el-table-column prop="workNumber" label="工号" sortable></el-table-column>
           <el-table-column prop="departmentName" label="部门" sortable width="120"></el-table-column>
-          <el-table-column prop="timeOfEntry" :formatter="dateFormat" label="入职时间" width="120"
+          <el-table-column prop="timeOfEntry" :formatter="transDateFormat" label="入职时间" width="120"
                            sortable></el-table-column>
-          <el-table-column prop="leaveTime" :formatter="dateFormat" label="离职时间" width="120" sortable></el-table-column>
+          <el-table-column prop="leaveTime" :formatter="transDateFormat" label="离职时间" width="120" sortable></el-table-column>
           <el-table-column prop="participatingInTheCity" label="社保城市" width="120"></el-table-column>
           <el-table-column prop="providentFundCity" label="公积金城市" width="120"></el-table-column>
           <el-table-column prop="socialSecurityBase" label="社保基数"></el-table-column>

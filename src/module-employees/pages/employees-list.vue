@@ -38,7 +38,7 @@
             <router-link :to="{'path':'/employees/import/',query: {name: '员工'}}" class="el-button el-button--primary el-button--mini" title="导入">导入</router-link>
             <el-button type="primary" size="mini" title="设置" @click="handlSet">设置</el-button>
             <router-link :to="{'path':'/employees/archiving/'}" class="el-button el-button--primary el-button--mini" title="历史归档">历史归档</router-link>
-          
+
           <el-button type="primary" size="mini" icon="el-icon-plus" @click="handlAdd">新增员工</el-button>
           <router-link :to="{'path':'/employees/report/'+ totals.month}" class="el-button el-button--primary el-button--mini" >{{totals.month}}月份报表</router-link>
         </div>
@@ -163,8 +163,8 @@
           </el-table-column>
           <el-table-column sortable label="账户状态" width="120">
             <template slot-scope="scope">
-              <el-switch 
-              v-model="scope.row.accountStatus" 
+              <el-switch
+              v-model="scope.row.accountStatus"
               active-color="#13ce66"
               inactive-color="#ff4949"
                @change="handleStatus(scope.row)">

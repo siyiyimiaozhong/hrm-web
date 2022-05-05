@@ -132,280 +132,307 @@
 </template>
 
 <script>
-import { minHeight, getBlob } from "@/filters/index";
-import { list } from "@/api/base/departments";
-import commonApi from "@/utils/common";
-import {
-  getArchivingList,
-  getArchivingCont,
-  importArchive
-} from "@/api/hrm/attendances";
-import FileSaver from "file-saver";
-import XLSX from "xlsx";
-export default {
-  name: "historicalArchiving",
-  components: {
-    // PageTool
-  },
-  data() {
-    return {
-      num: 0,
-      yearVal: commonApi.getMonth().preDates,
-      tableData: [],
-      showArchivig: false,
-      counts: "",
-      requestParameters: {
-        departmentId: "",
-        year: commonApi.getMonth().preYear
-      },
-      baseData: {
-        atteArchiveMonthlyId: ""
-      },
-      loading: false,
-      showHeight: 40,
-      boxHeight: "",
-      departmentData: [],
-      contentData:[]
-    };
-  },
-  computed: {
-    // 模糊搜索
-    tables() {
-      const search = this.baseData.keyword;
-      for (var i = 0; i < this.tableData.length; i++) {
-        if (search) {
-          this.tableData[i].contentData.filter(data => {
-            return Object.keys(data).some(key => {
-              return (
-                String(data[key])
-                  .toLowerCase()
-                  .indexOf(search) > -1
-              );
-            });
-          });
-        } else {
-          return this.tableData[i].contentData;
+  import {getBlob} from '@/filters/index'
+  import {list} from '@/api/base/departments'
+  import commonApi from '@/utils/common'
+  import {getArchivingCont, getArchivingList, importArchive} from '@/api/hrm/attendances'
+  import FileSaver from 'file-saver'
+  import XLSX from 'xlsx'
+
+  export default {
+    name: 'historicalArchiving',
+    components: {
+      // PageTool
+    },
+    data() {
+      return {
+        num: 0,
+        yearVal: commonApi.getMonth().preDates,
+        tableData: [],
+        showArchivig: false,
+        counts: '',
+        requestParameters: {
+          departmentId: '',
+          year: commonApi.getMonth().preYear
+        },
+        baseData: {
+          atteArchiveMonthlyId: ''
+        },
+        loading: false,
+        showHeight: 40,
+        boxHeight: '',
+        departmentData: [],
+        contentData: []
+      }
+    },
+    computed: {
+      // 模糊搜索
+      tables() {
+        const search = this.baseData.keyword
+        for (var i = 0; i < this.tableData.length; i++) {
+          if (search) {
+            this.tableData[i].contentData.filter(data => {
+              return Object.keys(data).some(key => {
+                return (
+                  String(data[key])
+                    .toLowerCase()
+                    .indexOf(search) > -1
+                )
+              })
+            })
+          } else {
+            return this.tableData[i].contentData
+          }
         }
       }
-    }
-  },
-  methods: {
-    init(params) {
-      getArchivingList(params)
-        .then(res => {
-          this.tableData = res.data.data;
-          if (this.tableData.length === 0) {
-            this.showArchivig = true;
-          } else {
-            this.showArchivig = false;
-          }
-          this.loading = false;
-        })
-        .catch(err => {
-          this.loading = false;
-        });
     },
-    // 部门
-    async getdepartment() {
-      await list().then(data => {
-        this.departmentData = data.data.data.depts;
-        this.requestParameters.departmentId = this.departmentData[0].id;
-        this.init(this.requestParameters);
-      });
-    },
-    // 获取列表
-    openTable(obj, index) {
-      this.baseData.atteArchiveMonthlyId = obj.id;
-      if (!obj.act) {
-        getArchivingCont(this.baseData)
+    methods: {
+      init(params) {
+        getArchivingList(params)
           .then(res => {
-            // this.$set(this.tableData[index], "contentData", res.data.data);
-            this.contentData=res.data.data
-            console.log(this.contentData)
-
-            this.loading = false;
-          })
-          .catch(err => {
-            if (err) {
-              console.log(err);
+            this.tableData = res.data.data
+            if (this.tableData.length === 0) {
+              this.showArchivig = true
+            } else {
+              this.showArchivig = false
             }
-            this.loading = false;
-          });
-        this.$set(this.tableData[index], "act", true);
-      } else {
-        this.$set(this.tableData[index], "act", false);
-      }
-    },
-    // 下载文件
-    handleExport(index) {
-      importArchive(this.baseData)
-        .then(response => {
-          // let getName = this.$refs.sheelName[index].innerText
-          let getName = "考勤报表";
-          let items = XLSX.utils.table_to_book(document.querySelector("#item"));
-          getBlob(getName, items, XLSX.write, FileSaver.saveAs);
-          this.$message.success("导出报表成功！");
+            this.loading = false
+          })
+          // eslint-disable-next-line handle-callback-err
+          .catch(err => {
+            this.loading = false
+          })
+      },
+      // 部门
+      async getdepartment() {
+        await list().then(data => {
+          console.log(data)
+          this.departmentData = data.data.data.depts
+          console.log(this.requestParameters)
+          this.requestParameters.departmentId = this.departmentData[0].id
+          console.log(this.requestParameters)
+          this.init(this.requestParameters)
         })
-        .catch(e => {
-          this.$message.error("导出报表失败！");
-        });
-    },
-    // 选择部门
-    handleChange(val) {
-      this.requestParameters.departmentId = val;
-      this.init(this.requestParameters);
-    },
-    // 选择年份
-    handleChangeYear() {
-      this.requestParameters.year = this.yearVal;
-      this.init(this.requestParameters);
-      if (this.tableData.length === 0) {
-        this.showArchivig = true;
-      } else {
-        this.showArchivig = false;
+      },
+      // 获取列表
+      openTable(obj, index) {
+        this.baseData.atteArchiveMonthlyId = obj.id
+        if (!obj.act) {
+          getArchivingCont(this.baseData)
+            .then(res => {
+              // this.$set(this.tableData[index], "contentData", res.data.data);
+              this.contentData = res.data.data
+              console.log(this.contentData)
+
+              this.loading = false
+            })
+            .catch(err => {
+              if (err) {
+                console.log(err)
+              }
+              this.loading = false
+            })
+          this.$set(this.tableData[index], 'act', true)
+        } else {
+          this.$set(this.tableData[index], 'act', false)
+        }
+      },
+      // 下载文件
+      handleExport(index) {
+        importArchive(this.baseData)
+          .then(response => {
+            // let getName = this.$refs.sheelName[index].innerText
+            let getName = '考勤报表'
+            let items = XLSX.utils.table_to_book(document.querySelector('#item'))
+            getBlob(getName, items, XLSX.write, FileSaver.saveAs)
+            this.$message.success('导出报表成功！')
+          })
+          .catch(e => {
+            this.$message.error('导出报表失败！')
+          })
+      },
+      // 选择部门
+      handleChange(val) {
+        this.requestParameters.departmentId = val
+        this.init(this.requestParameters)
+      },
+      // 选择年份
+      handleChangeYear() {
+        this.requestParameters.year = this.yearVal
+        this.init(this.requestParameters)
+        if (this.tableData.length === 0) {
+          this.showArchivig = true
+        } else {
+          this.showArchivig = false
+        }
+      },
+      dataSearch() {
       }
+      // 每页显示信息条数
+      // handleSizeChange(pageSize) {
+      //   this.requestParameters.pagesize = pageSize
+      //   if (this.requestParameters.page === 1) {
+      //     _this.init(this.requestParameters)
+      //   }
+      // },
+      // 进入某一页
+      // handleCurrentChange(val) {
+      //   this.requestParameters.page = val
+      //   _this.init()
+      // },
     },
-    dataSearch() {},
-    // 每页显示信息条数
-    // handleSizeChange(pageSize) {
-    //   this.requestParameters.pagesize = pageSize
-    //   if (this.requestParameters.page === 1) {
-    //     _this.init(this.requestParameters)
-    //   }
-    // },
-    // 进入某一页
-    // handleCurrentChange(val) {
-    //   this.requestParameters.page = val
-    //   _this.init()
-    // },
-  },
-  mounted() {},
-  created() {
-    this.getdepartment();
+    mounted() {
+    },
+    created() {
+      this.getdepartment()
+    }
   }
-};
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>
-@import "./../../styles/variables.scss";
+  @import "./../../styles/variables.scss";
 
-.historicalArcBox {
-  padding: 20px;
-  .historicalArcTop {
-    position: relative;
-    background: #fff;
-    padding: 10px 15px 0 15px;
-    .title {
-      color: $panGreen;
-      line-height: 40px;
-      border-bottom: solid 2px $panGreen;
-      font-size: 18px;
-      font-weight: bold;
-      display: inline-block;
-      padding: 0 25px;
-      .yearChange {
-        position: absolute;
-        top: 5px;
-        right: 10px;
+  .historicalArcBox {
+    padding: 20px;
+
+    .historicalArcTop {
+      position: relative;
+      background: #fff;
+      padding: 10px 15px 0 15px;
+
+      .title {
+        color: $panGreen;
+        line-height: 40px;
+        border-bottom: solid 2px $panGreen;
+        font-size: 18px;
+        font-weight: bold;
+        display: inline-block;
+        padding: 0 25px;
+
+        .yearChange {
+          position: absolute;
+          top: 5px;
+          right: 10px;
+        }
       }
     }
-  }
-  .historicalTable {
-    background: #fff;
-    .itemes {
-      .itemTopLab {
-        border-top: solid 1px #f0f0f0;
-        border-bottom: solid 3px #ccc;
-        padding: 15px;
-        .fr {
-          text-align: center;
-        }
-        div {
-          display: inline-block;
-          padding: 10px 50px 0;
-        }
 
-        div:last-child,
-        div:first-child {
-          border: none;
-        }
-        .lab {
-          position: relative;
-          top: -30px;
-          padding-right: 0;
-          padding-left: 15px;
-        }
-        .labTit {
-          cursor: pointer;
-        }
-        .title {
-          font-size: 16px;
-          margin: 10px 0;
-          span {
-            position: relative;
-            bottom: -2px;
-            font-size: 13px;
-            color: #999;
-            margin-left: 5px;
+    .historicalTable {
+      background: #fff;
+
+      .itemes {
+        .itemTopLab {
+          border-top: solid 1px #f0f0f0;
+          border-bottom: solid 3px #ccc;
+          padding: 15px;
+
+          .fr {
+            text-align: center;
           }
-        }
-        .itemTit {
-          color: #999;
-          margin: 8px 0;
-          font-size: 13px;
-        }
-        .itemNum {
-          font-size: 20px;
-          margin: 0;
-        }
-      }
-      .itemDropDown {
-        background: #fff;
-        .topLab {
-          position: relative;
-          padding: 15px 15px 30px;
+
           div {
             display: inline-block;
-            margin: 0 10px;
+            padding: 10px 50px 0;
+          }
+
+          div:last-child,
+          div:first-child {
+            border: none;
+          }
+
+          .lab {
+            position: relative;
+            top: -30px;
+            padding-right: 0;
+            padding-left: 15px;
+          }
+
+          .labTit {
+            cursor: pointer;
+          }
+
+          .title {
+            font-size: 16px;
+            margin: 10px 0;
+
             span {
-              display: inline-block;
               position: relative;
-              top: 2px;
-              margin-right: 5px;
-              width: 15px;
-              height: 15px;
-              background: $cl-1;
+              bottom: -2px;
+              font-size: 13px;
+              color: #999;
+              margin-left: 5px;
             }
           }
-          .rightLabBox {
-            position: absolute;
-            right: -10px;
-            top: 10px;
-            .btn {
-              border: solid 1px $green;
-              color: $green;
-              border-radius: 3px;
-              padding: 4px 10px;
-              font-size: 14px;
+
+          .itemTit {
+            color: #999;
+            margin: 8px 0;
+            font-size: 13px;
+          }
+
+          .itemNum {
+            font-size: 20px;
+            margin: 0;
+          }
+        }
+
+        .itemDropDown {
+          background: #fff;
+
+          .topLab {
+            position: relative;
+            padding: 15px 15px 30px;
+
+            div {
+              display: inline-block;
+              margin: 0 10px;
+
+              span {
+                display: inline-block;
+                position: relative;
+                top: 2px;
+                margin-right: 5px;
+                width: 15px;
+                height: 15px;
+                background: $cl-1;
+              }
             }
+
+            .rightLabBox {
+              position: absolute;
+              right: -10px;
+              top: 10px;
+
+              .btn {
+                border: solid 1px $green;
+                color: $green;
+                border-radius: 3px;
+                padding: 4px 10px;
+                font-size: 14px;
+              }
+            }
+          }
+        }
+
+        .act {
+          border-bottom: solid 3px $panGreen;
+
+          .lab {
+            color: $panGreen;
+          }
+
+          .labTit {
+            color: $panGreen;
           }
         }
       }
-      .act {
-        border-bottom: solid 3px $panGreen;
-        .lab {
-          color: $panGreen;
-        }
-        .labTit {
-          color: $panGreen;
-        }
+
+      .itemes:hover {
+        background: #fafbff;
       }
-    }
-    .itemes:hover {
-      background: #fafbff;
-    }
-    .itemes .lab:hover {
-      cursor: pointer;
+
+      .itemes .lab:hover {
+        cursor: pointer;
+      }
     }
   }
-}
 </style>

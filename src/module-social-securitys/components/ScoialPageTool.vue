@@ -15,7 +15,7 @@
           @change="checkChange"
         ></el-input>
         <!-- <a href="/employees/import/?name=社保">导入</a> -->
-        <router-link :to="{'path':'/employees/import/',query: {name: '社保'}}" title="导入">导入</router-link>
+<!--        <router-link :to="{'path':'/employees/import/',query: {name: '社保'}}" title="导入">导入</router-link>-->
         <router-link :to="{'path':'/social-securitys/historicalArchiving'}">历史归档</router-link>
         <router-link :to="{'path':'/social-securitys/monthStatement',query:{'yearMonth':this.$parent.yearMonth}}">
           {{tips.strMonth}}月报表

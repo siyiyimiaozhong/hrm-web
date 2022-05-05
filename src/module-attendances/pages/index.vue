@@ -68,7 +68,7 @@
               <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
-                :page-size="formData.pagesize"
+                :page-size="formData.pageSize"
                 layout="total, prev, pager, next"
                 :total="Number(attendInfo.counts)"
               ></el-pagination>
@@ -155,10 +155,10 @@
         },
         formData: {
           page: 1,
-          pagesize: 10,
-          keyword: this.keyword,
-          deptID: this.deptID, // 性别
-          stateID: this.stateID
+          pageSize: 10,
+          keyword: '',
+          deptIds: [],
+          stateId: ''
         },
         modifyData: {
           userId: '',
@@ -185,7 +185,7 @@
       },
       // 初始化数据
       async dataList(dataParams) {
-        // let dataParams={"page":1,"pagesize":10}
+        // let dataParams={"page":1,"pageSize":10}
         await attendancesList(dataParams).then(data => {
           var data = data.data.data
           if (data === null) {
@@ -206,6 +206,13 @@
           }
         })
       },
+      changeSelectParams(selectParams) {
+        this.formData.keyword = selectParams.keyword
+        this.formData.deptIds = selectParams.deptIds
+        this.formData.stateId = selectParams.stateId
+        this.page = 1
+        this.dataList(this.formData)
+      },
       // 列表部门筛选
       handleDeptChange(val) {
         console.log(val)
@@ -225,7 +232,7 @@
       },
       // 每页显示信息条数
       handleSizeChange(pageSize) {
-        this.formData.pagesize = pageSize
+        this.formData.pageSize = pageSize
         if (this.formData.page === 1) {
           _this.dataList(this.formData)
         }

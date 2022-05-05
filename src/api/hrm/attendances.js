@@ -1,7 +1,7 @@
 import {createAPI, createFormAPI} from '@/utils/request'
 
 export const list = data => createAPI('/attendances/:month', 'get', data)
-export const attendancesList = data => createAPI('/attendances', 'get', data)
+export const attendancesList = data => createAPI('/attendances', 'post', data)
 // export const information = data => createAPI('/attendances', 'get', data)
 export const importFill = data => createAPI('/attendances/import', 'post', data)
 // 考勤修改

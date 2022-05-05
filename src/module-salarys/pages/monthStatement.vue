@@ -211,7 +211,7 @@
       },
       handleExport() {
         let xlsxParam = {raw: true};
-        let getName = "社保报表";
+        let getName = "工资报表";
         let items = XLSX.utils.table_to_book(
           document.querySelector("#item"),
           xlsxParam

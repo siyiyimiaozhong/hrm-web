@@ -47,7 +47,7 @@
         >
           <el-table-column type="index" label="序号" center width="50"></el-table-column>
           <el-table-column prop="username" label="姓名" width="150px"></el-table-column>
-          <el-table-column prop="timeOfEntry" label="入职时间" :formatter="dateFormat" width="150px"></el-table-column>
+          <el-table-column prop="timeOfEntry" label="入职时间" :formatter="transDateFormat" width="150px"></el-table-column>
           <el-table-column prop="mobile" label="手机号" width="150px"></el-table-column>
           <el-table-column prop="idNumber" label="身份证号码" width="150px"></el-table-column>
           <el-table-column prop="theHighestDegreeOfEducation" label="学历" width="150px"></el-table-column>

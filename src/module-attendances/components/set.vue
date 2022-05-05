@@ -725,7 +725,7 @@
         this.$refs['overtimeForm'].validate(valid => {
           if (valid) {
             var deductionList = this.overtimeBase
-            deductionList.latestEffectDate = commonApi.dateFormat(
+            deductionList.latestEffectDate = commonApi.transDateFormat(
               deductionList.latestEffectDate
             )
             if (deductionList.isClock === true) {

@@ -101,7 +101,7 @@
 </template>
 
 <script>
-  import {getSettings, saveSettings} from "@/api/hrm/salarysApi";
+  import {getSettings, saveSettings} from '@/api/hrm/salarysApi'
 
   export default {
     name: 'users-table-index',
@@ -114,22 +114,22 @@
           communicationSubsidyScheme: 1,
           lunchAllowanceScheme: 1,
           housingSubsidyScheme: 1,
-          taxCalculationType: "1",
+          taxCalculationType: '1',
           transportationSubsidyAmount: 2.1,
           communicationSubsidyAmount: 1.2,
           lunchAllowanceAmount: 1.3,
           housingSubsidyAmount: 1.5
         },
         subsidySchemes: [
-          {"id": 1, "name": "每出勤日"},
-          {"id": 2, "name": "每计薪日"},
-          {"id": 3, "name": "每月固定"},
+          {'id': 1, 'name': '每出勤日'},
+          {'id': 2, 'name': '每计薪日'},
+          {'id': 3, 'name': '每月固定'}
         ],
         topLabel: 'launch',
         tabLab: 'launch',
         labelPosition: 'left',
         radio: '1',
-        text: '每出勤日：金额*实际出勤天数； 每计薪日：金额*计薪天数； 每月固定：固定金额；',
+        text: '每出勤日：金额*实际出勤天数； 每计薪日：金额*计薪天数； 每月固定：固定金额；'
       }
     },
     methods: {
@@ -143,7 +143,7 @@
       async saveData() {
         const {data: saveRes} = await saveSettings(this.sendForm)
         let suc = saveRes.success
-        if (suc == true) {
+        if (suc === true) {
           this.$message({
             message: '保存成功',
             type: 'success'

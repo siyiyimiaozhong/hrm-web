@@ -22,7 +22,8 @@
                   v-for="(it, ind) in monthOfReport"
                   :key="ind"
                   width="110"
-                >{{attendInfo.month}}/{{ind+1}}</th>
+                >{{attendInfo.month}}/{{ind+1}}
+                </th>
               </tr>
               <tr v-for="(item, index) in baseData" :key="item.id">
                 <td width="50">{{index}}</td>
@@ -90,7 +91,8 @@
                   :label="item.id"
                   :key="item.id"
                   :value="item.name"
-                >{{item.name}}</el-radio>
+                >{{item.name}}
+                </el-radio>
               </el-radio-group>
             </p>
           </div>
@@ -120,252 +122,258 @@
 </template>
 
 <script>
-import constantApi from "@/api/constant/employees";
-import attendanceApi from "@/api/constant/attendance";
-import { getNowFormatDate } from "@/filters/index";
-import PageTool from "@/components/page/page-tool";
-import { attendancesList, modify } from "@/api/hrm/attendances";
-import { list } from "@/api/base/departments";
-import AttendancesPageTool from "../components/Attendance-page-tool";
-import commonApi from "@/utils/common";
-let _this = null;
-export default {
-  name: "attendances",
-  components: { AttendancesPageTool, PageTool },
-  data() {
-    return {
-      baseData: [],
-      selectData: [],
-      stateData: [],
-      total: 100,
-      attendanceRecord: "",
-      monthOfReport: "",
-      centerDialogVisible: false,
-      month: "",
-      yearMonth: "",
-      attendInfo: {
-        month: "",
-        getDate: "",
-        getInfo: "",
-        name: "",
-        counts: "",
-        tobeTaskCount: ""
-      },
-      formData: {
-        page: 1,
-        pagesize: 10
-        // keyword: this.keyword,
-        // deptID: this.deptID, // 性别
-        // stateID: this.stateID
-      },
-      modifyData: {
-        userId: "",
-        day: "",
-        adtStatu: "",
-        departmentId:""
-      },
-      departmentData: []
-    }
-  },
-  methods: {
-    // 业务方法
-    setupUI() {
-      this.selectData = constantApi;
-      this.stateData = attendanceApi;
-      this.dataList(this.formData);
-      this.getdepartment();
-    },
-    // 部门
-    async getdepartment() {
-      await list().then(data => {
-        this.departmentData = data.data.data.depts;
-      });
-    },
-    // 初始化数据
-    async dataList(dataParams) {
-      // let dataParams={"page":1,"pagesize":10}
-      await attendancesList(dataParams).then(data => {
-        var data = data.data.data;
-        if (data === null) {
-          this.baseData = [];
-        } else {
-          this.baseData = data.data.rows;
-          this.attendInfo.counts = data.data.total;
-          var date = new Date();
-          var year = date.getFullYear();
-          var month = data.monthOfReport;
-          this.attendInfo.month = data.monthOfReport;
-          this.attendInfo.tobeTaskCount = data.tobeTaskCount;
-          var d = new Date(year, month, 0);
-          this.monthOfReport = d.getDate();
-        }
-      });
-    },
-    // 列表部门筛选
-    handleDeptChange(val) {
-      console.log(val)
-      this.formData.deptID = val;
-      this.dataList(this.formData);
-    },
-    handleStateChange(val) {
-      this.formData.adtStatu = val;
-      this.dataList(this.formData);
-    },
-    // 界面交互
-    handleSub() {
-      modify(this.modifyData).then(res => {
-        this.centerDialogVisible = false;
-        this.dataList(this.formData);
-      });
-    },
-    // 每页显示信息条数
-    handleSizeChange(pageSize) {
-      this.formData.pagesize = pageSize;
-      if (this.formData.page === 1) {
-        _this.dataList(this.formData);
-      }
-    },
-    // 进入某一页
-    handleCurrentChange(val) {
-      this.formData.page = val;
-      _this.dataList();
-    },
-    handleOver(item, id, it) {
-      this.modifyData.userId = item.id;
-      this.modifyData.day = it.day;
-      this.modifyData.departmentId = item.departmentId;
-      switch (it.adtStatu) {
-        case 1:
-          this.modifyData.adtStatu = "1";
-          break;
-        case 2:
-          this.modifyData.adtStatu = "2";
-          break;
-        case 3:
-          this.modifyData.adtStatu = "3";
-          break;
-        case 4:
-          this.modifyData.adtStatu = "4";
-          break;
-        case 5:
-          this.modifyData.adtStatu = "5";
-          break;
-        case 6:
-          this.modifyData.adtStatu = "6";
-          break;
-        case 7:
-          this.modifyData.adtStatu = "7";
-          break;
-        case 8:
-          this.modifyData.adtStatu = "8";
-          break;
-        case 9:
-          this.modifyData.adtStatu = "9";
-          break;
-        case 10:
-          this.modifyData.adtStatu = "10";
-          break;
-        case 11:
-          this.modifyData.adtStatu = "11";
-          break;
-        case 12:
-          this.modifyData.adtStatu = "12";
-          break;
-        case 13:
-          this.modifyData.adtStatu = "13";
-          break;
-        case 14:
-          this.modifyData.adtStatu = "14";
-          break;
-        case 15:
-          this.modifyData.adtStatu = "15";
-          break;
-        case 16:
-          this.modifyData.adtStatu = "16";
-          break;
-        case 17:
-          this.modifyData.adtStatu = "17";
-          break;
-        case 18:
-          this.modifyData.adtStatu = "18";
-          break;
-        case 19:
-          this.modifyData.adtStatu = "19";
-          break;
-        case 20:
-          this.modifyData.adtStatu = "20";
-          break;
-        case 21:
-          this.modifyData.adtStatu = "21";
-          break;
-        default:
-          this.modifyData.adtStatu = "22";
-      }
+  import constantApi from '@/api/constant/employees'
+  import attendanceApi from '@/api/constant/attendance'
+  import PageTool from '@/components/page/page-tool'
+  import {attendancesList, modify} from '@/api/hrm/attendances'
+  import {list} from '@/api/base/departments'
+  import AttendancesPageTool from '../components/Attendance-page-tool'
+  import commonApi from '@/utils/common'
 
-      if (it.adtStatu !== "") {
-        this.attendInfo.getDate = parseInt(id + 1);
-        this.attendInfo.getInfo = it.adtStatu;
-        this.attendInfo.name = item.name;
-        this.centerDialogVisible = true;
+  let _this = null
+  export default {
+    name: 'attendances',
+    components: {AttendancesPageTool, PageTool},
+    data() {
+      return {
+        baseData: [],
+        selectData: [],
+        stateData: [],
+        total: 100,
+        attendanceRecord: '',
+        monthOfReport: '',
+        centerDialogVisible: false,
+        month: '',
+        yearMonth: '',
+        attendInfo: {
+          month: '',
+          getDate: '',
+          getInfo: '',
+          name: '',
+          counts: '',
+          tobeTaskCount: ''
+        },
+        formData: {
+          page: 1,
+          pagesize: 10,
+          keyword: this.keyword,
+          deptID: this.deptID,
+          stateID: this.stateID
+        },
+        modifyData: {
+          userId: '',
+          day: '',
+          adtStatu: '',
+          departmentId: ''
+        },
+        departmentData: []
       }
-      // console.log(this.modifyData)
+    },
+    methods: {
+      // 业务方法
+      setupUI() {
+        this.selectData = constantApi
+        this.stateData = attendanceApi
+        this.dataList(this.formData)
+        this.getdepartment()
+      },
+      // 部门
+      async getdepartment() {
+        await list().then(data => {
+          this.departmentData = data.data.data.depts
+        })
+      },
+      // 初始化数据
+      async dataList(dataParams) {
+        // let dataParams={"page":1,"pagesize":10}
+        await attendancesList(dataParams).then(data => {
+          var param = data.data.data
+          if (param === null) {
+            this.baseData = []
+          } else {
+            this.baseData = data.data.rows
+            this.attendInfo.counts = data.data.total
+            var date = new Date()
+            var year = date.getFullYear()
+            var month = data.monthOfReport
+            this.attendInfo.month = data.monthOfReport
+            this.attendInfo.tobeTaskCount = data.tobeTaskCount
+            var d = new Date(year, month, 0)
+            this.monthOfReport = d.getDate()
+          }
+        })
+      },
+      // 列表部门筛选
+      handleDeptChange(val) {
+        console.log(val)
+        this.formData.deptID = val
+        this.dataList(this.formData)
+      },
+      handleStateChange(val) {
+        this.formData.adtStatu = val
+        this.dataList(this.formData)
+      },
+      // 界面交互
+      handleSub() {
+        modify(this.modifyData).then(res => {
+          this.centerDialogVisible = false
+          this.dataList(this.formData)
+        })
+      },
+      // 每页显示信息条数
+      handleSizeChange(pageSize) {
+        this.formData.pagesize = pageSize
+        if (this.formData.page === 1) {
+          _this.dataList(this.formData)
+        }
+      },
+      // 进入某一页
+      handleCurrentChange(val) {
+        this.formData.page = val
+        _this.dataList()
+      },
+      handleOver(item, id, it) {
+        this.modifyData.userId = item.id
+        this.modifyData.day = it.day
+        this.modifyData.departmentId = item.departmentId
+        switch (it.adtStatu) {
+          case 1:
+            this.modifyData.adtStatu = '1'
+            break
+          case 2:
+            this.modifyData.adtStatu = '2'
+            break
+          case 3:
+            this.modifyData.adtStatu = '3'
+            break
+          case 4:
+            this.modifyData.adtStatu = '4'
+            break
+          case 5:
+            this.modifyData.adtStatu = '5'
+            break
+          case 6:
+            this.modifyData.adtStatu = '6'
+            break
+          case 7:
+            this.modifyData.adtStatu = '7'
+            break
+          case 8:
+            this.modifyData.adtStatu = '8'
+            break
+          case 9:
+            this.modifyData.adtStatu = '9'
+            break
+          case 10:
+            this.modifyData.adtStatu = '10'
+            break
+          case 11:
+            this.modifyData.adtStatu = '11'
+            break
+          case 12:
+            this.modifyData.adtStatu = '12'
+            break
+          case 13:
+            this.modifyData.adtStatu = '13'
+            break
+          case 14:
+            this.modifyData.adtStatu = '14'
+            break
+          case 15:
+            this.modifyData.adtStatu = '15'
+            break
+          case 16:
+            this.modifyData.adtStatu = '16'
+            break
+          case 17:
+            this.modifyData.adtStatu = '17'
+            break
+          case 18:
+            this.modifyData.adtStatu = '18'
+            break
+          case 19:
+            this.modifyData.adtStatu = '19'
+            break
+          case 20:
+            this.modifyData.adtStatu = '20'
+            break
+          case 21:
+            this.modifyData.adtStatu = '21'
+            break
+          default:
+            this.modifyData.adtStatu = '22'
+        }
+
+        if (it.adtStatu !== '') {
+          this.attendInfo.getDate = parseInt(id + 1)
+          this.attendInfo.getInfo = it.adtStatu
+          this.attendInfo.name = item.name
+          this.centerDialogVisible = true
+        }
+        // console.log(this.modifyData)
+      }
+    },
+    // 挂载结束
+    mounted() {
+      this.yearMonth = commonApi.getMonth().preDates
+      this.month = commonApi.getMonth().preMonth
+    },
+    // 创建完毕状态
+    created: function () {
+      _this = this
+      this.setupUI()
+    },
+    // 组件更新
+    updated: function () {
     }
-  },
-  // 挂载结束
-  mounted() {
-    this.yearMonth = commonApi.getMonth().preDates;
-    this.month = commonApi.getMonth().preMonth;
-  },
-  // 创建完毕状态
-  created: function() {
-    _this = this;
-    this.setupUI();
-  },
-  // 组件更新
-  updated: function() {}
-};
+  }
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-.cont-bod-box {
-  padding: 20px;
-  background: #fff;
-  border-radius: 3px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  border: 1px solid #ebeef5;
-  table {
-    line-height: 36px;
-    border: solid 1px #ebeef5;
-    border-right: 0 none;
-    border-bottom: 0 none;
-    tr {
-      th {
-        height: 50px;
-        text-align: center;
-        border-right: solid 1px #ebeef5;
-        border-bottom: solid 1px #ebeef5;
-        border-bottom: 2px solid #e8e8e8;
-        background: #fafafa;
-      }
-      td {
-        height: 36px;
-        text-align: center;
-        border-right: solid 1px #ebeef5;
-        border-bottom: solid 1px #ebeef5;
+  .cont-bod-box {
+    padding: 20px;
+    background: #fff;
+    border-radius: 3px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ebeef5;
+
+    table {
+      line-height: 36px;
+      border: solid 1px #ebeef5;
+      border-right: 0 none;
+      border-bottom: 0 none;
+
+      tr {
+        th {
+          height: 50px;
+          text-align: center;
+          border-right: solid 1px #ebeef5;
+          border-bottom: solid 1px #ebeef5;
+          border-bottom: 2px solid #e8e8e8;
+          background: #fafafa;
+        }
+
+        td {
+          height: 36px;
+          text-align: center;
+          border-right: solid 1px #ebeef5;
+          border-bottom: solid 1px #ebeef5;
+        }
       }
     }
   }
-}
-.page-list {
-  text-align: right;
-  margin-top: 10px;
-}
-.attenInfo {
-  p {
-    &.check {
-      padding: 20px 0 0;
+
+  .page-list {
+    text-align: right;
+    margin-top: 10px;
+  }
+
+  .attenInfo {
+    p {
+      &.check {
+        padding: 20px 0 0;
+      }
     }
   }
-}
 </style>
