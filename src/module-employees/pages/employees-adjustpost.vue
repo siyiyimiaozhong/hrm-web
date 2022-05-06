@@ -90,7 +90,7 @@
                     <el-select class="filter-item" v-model="formData.reportingObject">
                       <el-option
                         v-for="item in employeesSimpleListData"
-                        :key="item.id" :label="item.fullName" :value="item.id">
+                        :key="item.id" :label="item.username" :value="item.id">
                         <!-- <span>{{item.fullName}}</span> -->
                     </el-option>
                     </el-select>
@@ -114,7 +114,7 @@
                     <el-select class="filter-item" v-model="formData.hrbp">
                       <el-option
                       v-for="item in employeesSimpleListData"
-                        :key="item.id" :label="item.fullName" :value="item.id">
+                        :key="item.id" :label="item.username" :value="item.id">
                         <!-- <span>{{item.fullName}}</span> -->
                     </el-option>
                     </el-select>

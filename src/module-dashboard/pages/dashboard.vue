@@ -131,19 +131,19 @@
               <!-- </ul> -->
               <ul class="clearfix">
                 <li>
-                  <a href="#">人事月报</a>
+                  <a href="#" @click="jump('/attendances')">考勤查询</a>
                 </li>
                 <li>
-                  <a href="#">考勤查询</a>
+                  <a href="#" @click="jump('/employees')">员工查询</a>
                 </li>
                 <li>
-                  <a href="#">考勤统计</a>
+                  <a href="#" @click="jump('/social-securitys')">社保统计</a>
                 </li>
                 <li>
-                  <a href="#">员工审核</a>
+                  <a href="#" @click="jump('/salarys')">工资查询</a>
                 </li>
                 <li>
-                  <a href="#">组织架构</a>
+                  <a href="#" @click="jump('/departments')">组织架构</a>
                 </li>
               </ul>
             </div>
@@ -230,6 +230,9 @@ export default {
     // }
   },
   methods: {
+    jump(uri) {
+      this.$router.push(uri + '/index')
+    },
     // 业务方法
     doQuery(params) {
       this.listLoading = true

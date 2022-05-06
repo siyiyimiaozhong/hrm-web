@@ -669,6 +669,7 @@
             attendanceSave(this.formBase).then(() => {
               this.$emit('dataSearch')
               this.handleClose()
+              this.$message.success('修改成功')
             })
           } else {
             this.$message.error('*号为必填项!')

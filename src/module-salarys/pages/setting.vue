@@ -1,8 +1,9 @@
 <template>
   <div class="settingContent">
     <div class="settingTop">
-      <div class="topLab"><span @click="tabSwitch('launch')" :class="[tabLab == 'launch' ? 'act' : '']">计薪设置</span><span
-        @click="tabSwitch('approvals')" :class="[tabLab == 'approvals' ? 'act' : '']">津贴设置</span></div>
+      <div class="topLab">
+        <span @click="tabSwitch('launch')" :class="[tabLab == 'launch' ? 'act' : '']">计薪设置</span>
+        <span @click="tabSwitch('approvals')" :class="[tabLab == 'approvals' ? 'act' : '']">津贴设置</span></div>
     </div>
     <div class="content" v-show="tabLab == 'launch'">
       <el-form :label-position="labelPosition" label-width="140px" :model="sendForm">
@@ -12,7 +13,7 @@
             <el-option label="次月" :value="2"></el-option>
           </el-select>
           <ul><span>?</span>
-            <li>如果201606月工资中扣除2016年6月自然月的社保公积金，请选择当月；如果扣除2016年7月自然月的社保公积金，请选择次月。</li>
+            <li>如果202202月工资中扣除2022年2月自然月的社保公积金，请选择当月；如果扣除2016年7月自然月的社保公积金，请选择次月。</li>
           </ul>
         </el-form-item>
         <el-form-item label="社保数据来源" style="width: 450px;">
@@ -86,8 +87,8 @@
         <el-form-item label="适用计税方式">
           <template>
             <el-radio-group v-model="sendForm.taxCalculationType">
-              <el-radio label="1">税前</el-radio>
-              <el-radio label="2">税后</el-radio>
+              <el-radio :label="1">税前</el-radio>
+              <el-radio :label="2">税后</el-radio>
             </el-radio-group>
           </template>
         </el-form-item>
@@ -114,7 +115,7 @@
           communicationSubsidyScheme: 1,
           lunchAllowanceScheme: 1,
           housingSubsidyScheme: 1,
-          taxCalculationType: '1',
+          taxCalculationType: 1,
           transportationSubsidyAmount: 2.1,
           communicationSubsidyAmount: 1.2,
           lunchAllowanceAmount: 1.3,
