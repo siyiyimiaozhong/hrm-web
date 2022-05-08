@@ -52,20 +52,20 @@
           v-model="ruleForm.reasonsForApplication"
         ></el-input>
       </el-form-item>
-<!--      <el-form-item label="图片">-->
-<!--        <el-upload-->
-<!--          action="https://jsonplaceholder.typicode.com/posts/"-->
-<!--          list-type="picture-card"-->
-<!--          :on-preview="handlePictureCardPreview"-->
-<!--          :on-remove="handleRemove"-->
-<!--        >-->
-<!--          <i class="el-icon-plus"></i>-->
-<!--          <div slot="tip" class="el-upload__tip" style="color:#f00;">注： 只能上传jpg/png文件，且不超过500kb</div>-->
-<!--        </el-upload>-->
-<!--        <el-dialog :visible.sync="dialogVisible">-->
-<!--          <img width="100%" :src="dialogImageUrl" alt />-->
-<!--        </el-dialog>-->
-<!--      </el-form-item>-->
+      <!--      <el-form-item label="图片">-->
+      <!--        <el-upload-->
+      <!--          action="https://jsonplaceholder.typicode.com/posts/"-->
+      <!--          list-type="picture-card"-->
+      <!--          :on-preview="handlePictureCardPreview"-->
+      <!--          :on-remove="handleRemove"-->
+      <!--        >-->
+      <!--          <i class="el-icon-plus"></i>-->
+      <!--          <div slot="tip" class="el-upload__tip" style="color:#f00;">注： 只能上传jpg/png文件，且不超过500kb</div>-->
+      <!--        </el-upload>-->
+      <!--        <el-dialog :visible.sync="dialogVisible">-->
+      <!--          <img width="100%" :src="dialogImageUrl" alt />-->
+      <!--        </el-dialog>-->
+      <!--      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" @click="submitForm()">提交</el-button>
         <el-button @click="resetForm()">重置</el-button>
@@ -75,72 +75,71 @@
 </template>
 
 <script>
-import { applyeLave } from "@/api/hrm/approvalsApi";
+  import {applyeLave} from '@/api/hrm/approvalsApi';
 
-export default {
-  name: "users-table-index",
-  data() {
-    return {
-      dialogImageUrl: "",
-      dialogVisible: false,
-      ruleForm: {
+  export default {
+    name: 'users-table-index',
+    data() {
+      return {
+        dialogImageUrl: '',
+        dialogVisible: false,
+        ruleForm: {},
+        opType: 7,
+        options: [
+          {
+            value: 7,
+            label: '请假'
+          },
+          {
+            value: 18,
+            label: '调休'
+          }
+        ],
+        duration: 0
+      }
+    },
+    methods: {
+      handleRemove(file, fileList) {
+        console.log(file, fileList)
       },
-      opType: 7,
-      options: [
-        {
-          value: 7,
-          label: "请假"
-        },
-        {
-          value: 18,
-          label: "调休"
-        }
-      ],
-      duration: 0
-    };
-  },
-  methods: {
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
-    },
-    submitForm() {
-      console.log("optype:", this.opType);
-      this.applyLeave()
-    },
-    resetForm() {
-      this.ruleForm = {};
-    },
-    async applyLeave(){
-      let sendForm = this.ruleForm
-      sendForm.holidayType = this.opType
-      const { data: saveRes } = await applyeLave(sendForm)
-      if(saveRes.success){
+      handlePictureCardPreview(file) {
+        this.dialogImageUrl = file.url
+        this.dialogVisible = true
+      },
+      submitForm() {
+        console.log('optype:', this.opType)
+        this.applyLeave()
+      },
+      resetForm() {
         this.ruleForm = {}
-        this.$emit("closeDialog");
+      },
+      async applyLeave() {
+        let sendForm = this.ruleForm
+        sendForm.holidayType = this.opType
+        console.log(sendForm)
+        const {data: saveRes} = await applyeLave(sendForm)
+        if (saveRes.success) {
+          this.ruleForm = {}
+          this.$emit('closeDialog')
+        }
+      }
+    },
+    computed: {
+      computeDuration() {
+        let duration = 0
+        if (this.ruleForm.startTime && this.ruleForm.endTime) {
+          let durationStamp = this.ruleForm.endTime - this.ruleForm.startTime
+          let fourHours = 1000 * 60 * 60 * 24
+          duration = Math.floor(durationStamp / fourHours) + 1
+        }
+        return duration
       }
     }
-  },
-  computed: {
-    computeDuration() {
-      let duration = 0
-      if(this.ruleForm.startTime&&this.ruleForm.endTime){
-        let durationStamp=this.ruleForm.endTime-this.ruleForm.startTime
-        let fourHours=1000*60*60*4
-        let total=Math.floor(durationStamp/fourHours)
-        duration=Math.floor(total/2)+(total%2*0.5)
-      }
-      return duration;
-    }
-  }
-};
+  };
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-@import "./../../styles/variables";
-// .usersContainer {
-// }
+  @import "./../../styles/variables";
+  // .usersContainer {
+  // }
 </style>

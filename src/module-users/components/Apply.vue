@@ -115,7 +115,7 @@
       },
       submitForm() {
         console.log('optype:', this.opType)
-        if (this.opType == 15) {
+        if (this.opType === 15) {
           this.applyOvertime()
         } else {
           this.applyDimission()

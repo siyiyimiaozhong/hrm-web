@@ -23,7 +23,7 @@
           </el-alert>
           </div>
         </div>
-        <component v-bind:is="importCompon" ref="import" :baseData='baseData'>
+        <component v-bind:is="importCompon" ref="import" :baseData="this.$route.query.name === '员工' ? userData : attendanceData">
         </component>
         </div>
       </el-card>
@@ -44,9 +44,14 @@ export default {
     return {
       importCompon: 'importCompon',
       boxHeight: '',
-      baseData: {
+      baseData: {},
+      userData: {
         upUrl: '/api/sys/user/import',
         fileUrl: '/api/sys/user/template'
+      },
+      attendanceData: {
+        upUrl: '/api/attendances/import',
+        fileUrl: '/api/attendances/template'
       }
     }
   },

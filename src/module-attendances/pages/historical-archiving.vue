@@ -206,11 +206,8 @@
       // 部门
       async getdepartment() {
         await list().then(data => {
-          console.log(data)
           this.departmentData = data.data.data.depts
-          console.log(this.requestParameters)
           this.requestParameters.departmentId = this.departmentData[0].id
-          console.log(this.requestParameters)
           this.init(this.requestParameters)
         })
       },

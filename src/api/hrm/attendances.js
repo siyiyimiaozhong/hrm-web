@@ -8,7 +8,7 @@ export const importFill = data => createAPI('/attendances/import', 'post', data)
 export const modify = data => createAPI(`/attendances/${data.userId}`, 'put', data)
 export const alert = data => createAPI('/notify/mail', 'post', data)
 export const getArchivingList = data => createAPI('/attendances/reports/year', 'get', data) // 归档
-export const getArchivingCont = data => createAPI(`/attendances/reports/${data.atteArchiveMonthlyId}`, 'post', data)
+export const getArchivingCont = data => createAPI(`/attendances/reports/${data.atteArchiveMonthlyId}`, 'get', data)
 export const reportFormList = data => createAPI(`/attendances/reports`, 'get', data)
 export const importAccount = data => createAPI('/attendances/import', 'post', data)
 export const archives = data => createAPI('/attendances/archives', 'get', data)

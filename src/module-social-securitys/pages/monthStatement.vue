@@ -175,10 +175,22 @@
       },
       async archive() {
         let yearMonth = this.yearMonth
-        const {data: archiveRes} = await getArchivingArchive({yearMonth})
+        const {data: archiveRes} = await getArchivingArchive({yearMonth}).then(res => {
+          if (res.data.code === 10000) {
+            this.$message.success('归档成功')
+          } else {
+            this.$message.error('归档失败')
+          }
+        })
       },
       async createNewReport(yearMonth) {
-        const {data: archiveRes} = await newReport({yearMonth})
+        const {data: archiveRes} = await newReport({yearMonth}).then(res => {
+          if (res.data.code === 10000) {
+            this.$message.success('新建报表成功')
+          } else {
+            this.$message.error('新建报表失败')
+          }
+        })
       },
       // 归档报表
       archivingReportForm(first) {

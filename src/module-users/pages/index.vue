@@ -47,9 +47,9 @@
 
     <el-dialog :title="title" :visible.sync="dialogVisible" width="40%">
       <span>
-        <Apply v-show="lab == '离职'" v-on:closeDialog="closeDialog"/>
+        <Apply v-show="lab === '离职'" v-on:closeDialog="closeDialog"/>
         <!-- <OverTimeWork v-show="lab == '加班'" /> -->
-        <LeaveRelevant v-show="lab == '事假'" v-on:closeDialog="closeDialog"/>
+        <LeaveRelevant v-show="lab === '事假'" v-on:closeDialog="closeDialog"/>
         <!-- <LeaveRelevant v-show="lab == '调休'"/> -->
       </span>
     </el-dialog>
